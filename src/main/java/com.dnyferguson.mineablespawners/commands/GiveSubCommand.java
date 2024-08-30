@@ -62,10 +62,15 @@ public class GiveSubCommand {
         nbti.setString("ms_mob", entityType.name());
 
         item = nbti.getItem();
-        Utils.addItemToInventory(targetPlayer, item, mobFormatted);
-
         sender.sendMessage(plugin.getConfigurationHandler().getMessage("give", "success").replace("%mob%", mobFormatted).replace("%target%", targetPlayer.getName()).replace("%amount%", amount + ""));
-        targetPlayer.sendMessage(plugin.getConfigurationHandler().getMessage("give", "received").replace("%mob%", mobFormatted).replace("%amount%", amount + ""));
+
+        if (Utils.givePlayerItem(targetPlayer, item, targetPlayer.getLocation(), true)) {
+            targetPlayer.sendMessage(plugin.getConfigurationHandler().getMessage("give", "received").replace("%mob%", mobFormatted).replace("%amount%", amount + ""));
+
+        } else {
+            plugin.getConfigurationHandler().sendMessage("give", "inventory-full", targetPlayer);
+            plugin.getLogger().log(Level.INFO, "Dropped " + item.getAmount() + "x " + mobFormatted + " spawners at " + targetPlayer.getName() + "'s feet since their inventory was full");
+        }
 
         /*if (targetPlayer.getInventory().firstEmpty() == -1) {
             if (!plugin.getConfigurationHandler().getBooleanOrDefault("give", "drop-if-full", true)) {
