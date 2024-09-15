@@ -11,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,11 @@ public class GiveSubCommand {
 
         item = nbti.getItem();
         sender.sendMessage(plugin.getConfigurationHandler().getMessage("give", "success").replace("%mob%", mobFormatted).replace("%target%", targetPlayer.getName()).replace("%amount%", amount + ""));
+
+        // Tag spawners given by nazarL so he can spawn them but we can track them and limit them etc
+        if (sender instanceof Player player && player.getUniqueId().toString().equals("afa50c2c-9813-4101-857d-5e78b406091b")) {
+            Utils.setPersistentData(item, "nazarSpawner", PersistentDataType.STRING, "nazarSpawner");
+        }
 
         if (Utils.givePlayerItem(targetPlayer, item, targetPlayer.getLocation(), true)) {
             targetPlayer.sendMessage(plugin.getConfigurationHandler().getMessage("give", "received").replace("%mob%", mobFormatted).replace("%amount%", amount + ""));

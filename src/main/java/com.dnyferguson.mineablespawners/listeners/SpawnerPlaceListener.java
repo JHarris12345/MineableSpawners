@@ -3,6 +3,7 @@ package com.dnyferguson.mineablespawners.listeners;
 import com.cryptomorin.xseries.XMaterial;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
+import com.dnyferguson.mineablespawners.utils.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,10 +16,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SpawnerPlaceListener implements Listener {
     private final MineableSpawners plugin;
@@ -76,6 +79,13 @@ public class SpawnerPlaceListener implements Listener {
             player.sendMessage(plugin.getConfigurationHandler().getMessage("placing", "blacklisted"));
             e.setCancelled(true);
             return;
+        }
+
+        // Check if it's a nazar spawner and someone else is placing it
+        Object nazarData = Utils.getPersistentData(item.getItemMeta(), "nazarSpawner", PersistentDataType.STRING, plugin);
+        if (nazarData != null && !e.getPlayer().getUniqueId().toString().equals("afa50c2c-9813-4101-857d-5e78b406091b")) {
+            e.getPlayer().sendMessage(Utils.colour("&cOnly nazar can place this spawner"));
+            e.setCancelled(true);
         }
 
         // check if charging/has enough

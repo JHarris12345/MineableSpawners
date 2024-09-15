@@ -1,13 +1,20 @@
 package com.dnyferguson.mineablespawners.utils;
 
 import com.dnyferguson.mineablespawners.MineableSpawners;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -57,5 +64,31 @@ public class Utils {
             return false;
 
         } else return true;
+    }
+
+    public static void setPersistentData(ItemStack item, String key, PersistentDataType persistentDataType, Object value) {
+        ItemMeta meta = item.getItemMeta();
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, key), persistentDataType, value);
+        item.setItemMeta(meta);
+    }
+
+    public static Object getPersistentData(ItemMeta meta, String key, PersistentDataType persistentDataType, Plugin plugin) {
+        if (meta == null || plugin == null) return null;
+        Object object = meta.getPersistentDataContainer().get(new NamespacedKey(plugin, key), persistentDataType);
+
+        return object;
+    }
+
+    public static String colour(String string) {
+        Pattern pattern = Pattern.compile("&?#[A-Fa-f0-9]{6}");
+        Matcher matcher = pattern.matcher(string);
+        String output = ChatColor.translateAlternateColorCodes('&', string);
+
+        while (matcher.find()) {
+            String color = string.substring(matcher.start(), matcher.end());
+            output = output.replace(color, "" + net.md_5.bungee.api.ChatColor.of(color.replace("&", "")));
+        }
+
+        return output;
     }
 }
