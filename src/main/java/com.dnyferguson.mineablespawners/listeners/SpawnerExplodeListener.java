@@ -34,7 +34,7 @@ public class SpawnerExplodeListener implements Listener {
             return;
         }
 
-        if (e.getEntityType() == EntityType.WIND_CHARGE) return;
+        if (e.getEntityType() == EntityType.WIND_CHARGE || e.getEntityType() == EntityType.BREEZE_WIND_CHARGE) return;
 
         for (Block block : e.blockList()) {
             if (!block.getType().equals(XMaterial.SPAWNER.parseMaterial())) {
