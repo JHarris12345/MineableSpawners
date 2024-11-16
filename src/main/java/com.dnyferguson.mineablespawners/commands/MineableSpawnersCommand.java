@@ -2,9 +2,14 @@ package com.dnyferguson.mineablespawners.commands;
 
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
 
 public class MineableSpawnersCommand implements CommandExecutor {
     private final MineableSpawners plugin;
@@ -70,6 +75,22 @@ public class MineableSpawnersCommand implements CommandExecutor {
             }
 
             typesSubCommand.execute(plugin, sender);
+            return true;
+        }
+
+        // ms dropspawner [entityType] [world] [x] [y] [z]
+        if (subCommand.equals("dropspawner") && args.length == 6 && sender.hasPermission("mineablespawners.admin")) {
+            EntityType type = EntityType.valueOf(args[1].toUpperCase());
+            World world = Bukkit.getWorld(args[2]);
+            int x = Integer.parseInt(args[3]);
+            int y = Integer.parseInt(args[4]);
+            int z = Integer.parseInt(args[5]);
+
+            ItemStack spawner = MineableSpawners.getApi().getSpawnerFromEntityType(type);
+            Location loc = new Location(world, x, y, z);
+
+            loc.getWorld().dropItemNaturally(loc, spawner);
+
             return true;
         }
 
