@@ -68,6 +68,23 @@ public class SpawnerExplodeListener implements Listener {
                 item.setItemMeta(meta);
             }
 
+            /*int spawnerStackCount = 1;
+
+            if (plugin.getServer().getPluginManager().getPlugin("InsanityFactions") != null) {
+                String world = spawner.getWorld().getName();
+                int x = spawner.getX();
+                int y = spawner.getY();
+                int z = spawner.getZ();
+
+                String translation = PlaceholderAPI.setPlaceholders(null, "%insanityfactions_spawnerstackcount_" + world + "_" + x + "_" + y + "_" + z + "%");
+                try {
+                    spawnerStackCount = Integer.parseInt(translation);
+                } catch (NumberFormatException ignored) {}
+            }
+
+            if (spawnerStackCount == 0) spawnerStackCount = 1;
+            item.setAmount(spawnerStackCount);*/
+
             NBTItem nbti = new NBTItem(item);
             nbti.setString("ms_mob", spawner.getSpawnedType().name());
 

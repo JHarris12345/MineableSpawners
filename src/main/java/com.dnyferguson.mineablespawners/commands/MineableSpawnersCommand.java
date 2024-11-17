@@ -79,7 +79,7 @@ public class MineableSpawnersCommand implements CommandExecutor {
         }
 
         // ms dropspawner [entityType] [world] [x] [y] [z]
-        if (subCommand.equals("dropspawner") && args.length == 6 && sender.hasPermission("mineablespawners.admin")) {
+        /*if (subCommand.equals("dropspawner") && args.length == 6 && sender.hasPermission("mineablespawners.admin")) {
             EntityType type = EntityType.valueOf(args[1].toUpperCase());
             World world = Bukkit.getWorld(args[2]);
             int x = Integer.parseInt(args[3]);
@@ -92,7 +92,7 @@ public class MineableSpawnersCommand implements CommandExecutor {
             loc.getWorld().dropItemNaturally(loc, spawner);
 
             return true;
-        }
+        }*/
 
         if (subCommand.equals("reload") && sender.hasPermission("mineablespawners.reload")) {
             plugin.getConfigurationHandler().reload();
