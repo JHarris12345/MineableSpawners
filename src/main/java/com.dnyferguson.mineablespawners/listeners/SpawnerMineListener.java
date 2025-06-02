@@ -201,7 +201,7 @@ public class SpawnerMineListener implements Listener {
         }
 
         minedSpawners.add(loc);
-        loc.getWorld().dropItem(loc, item);
+        loc.getWorld().dropItem(loc.toCenterLocation(), item);
     }
 
     private void handleStillBreak(BlockBreakEvent e, Player player, String msg, String reason) {
