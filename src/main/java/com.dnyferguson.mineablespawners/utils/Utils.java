@@ -1,6 +1,7 @@
 package com.dnyferguson.mineablespawners.utils;
 
 import com.dnyferguson.mineablespawners.MineableSpawners;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -90,5 +91,18 @@ public class Utils {
         }
 
         return output;
+    }
+
+    public static boolean hasAEEnchant(ItemStack item, String enchantName) {
+        Plugin ae = plugin.advancedEnchantments;
+        if (ae == null) ae = Bukkit.getPluginManager().getPlugin("AdvancedEnchantments");
+
+        if (ae != null) {
+            String pdc = "ae_enchantment-" + enchantName;
+            Integer data = item.getPersistentDataContainer().get(new NamespacedKey(ae, pdc), PersistentDataType.INTEGER);
+            return data != null;
+        }
+
+        return false;
     }
 }

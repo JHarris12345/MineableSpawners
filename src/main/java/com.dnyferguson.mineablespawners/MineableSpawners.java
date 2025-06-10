@@ -7,12 +7,15 @@ import com.dnyferguson.mineablespawners.metrics.Metrics;
 import com.dnyferguson.mineablespawners.utils.ConfigurationHandler;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MineableSpawners extends JavaPlugin {
     private static MineableSpawners plugin;
+
+    public Plugin advancedEnchantments; // Not cast to the plugin as this isn't for API, just getting the plugin instance for checking PDC
 
     private ConfigurationHandler configurationHandler;
     private Economy econ;

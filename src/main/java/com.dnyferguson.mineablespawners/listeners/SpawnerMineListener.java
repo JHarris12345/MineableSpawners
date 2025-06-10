@@ -3,6 +3,7 @@ package com.dnyferguson.mineablespawners.listeners;
 import com.cryptomorin.xseries.XMaterial;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
+import com.dnyferguson.mineablespawners.utils.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -201,7 +202,17 @@ public class SpawnerMineListener implements Listener {
         }
 
         minedSpawners.add(loc);
-        loc.getWorld().dropItem(loc.toCenterLocation(), item);
+
+        // If the player is using a telepathy item then put the spawner right in their inventory
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand != null && Utils.hasAEEnchant(hand, "telepathy")) {
+            if (!player.getInventory().addItem(item).isEmpty()) {
+                loc.getWorld().dropItem(loc.toCenterLocation(), item);
+            }
+
+        } else {
+            loc.getWorld().dropItem(loc.toCenterLocation(), item);
+        }
     }
 
     private void handleStillBreak(BlockBreakEvent e, Player player, String msg, String reason) {
