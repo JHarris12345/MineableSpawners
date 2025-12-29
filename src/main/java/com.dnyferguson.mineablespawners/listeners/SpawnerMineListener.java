@@ -163,8 +163,10 @@ public class SpawnerMineListener implements Listener {
         if (plugin.getConfigurationHandler().getBoolean("mining", "use-perm-based-chances") && permissionChances.size() > 0) {
             for (String perm : permissionChances.keySet()) {
                 if (player.hasPermission(perm)) {
-                    dropChance = permissionChances.get(perm)/100;
-                    break;
+                    double chance = permissionChances.get(perm)/100;
+                    if (chance > dropChance) {
+                        dropChance = chance;
+                    }
                 }
             }
         } else {
