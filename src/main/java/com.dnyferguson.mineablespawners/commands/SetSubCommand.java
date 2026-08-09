@@ -57,7 +57,9 @@ public class SetSubCommand {
 
         CreatureSpawner spawner = (CreatureSpawner) target.getState();
 
-        String from = Chat.uppercaseStartingLetters(spawner.getSpawnedType().name());
+        // getSpawnedType() can return null on some server implementations; guard against NPE
+        EntityType currentSpawn = spawner.getSpawnedType();
+        String from = (currentSpawn == null) ? "unknown" : Chat.uppercaseStartingLetters(currentSpawn.name());
         String to = Chat.uppercaseStartingLetters(type);
         if (from.equals(to)) {
             player.sendMessage(plugin.getConfigurationHandler().getMessage("set", "already-type"));
