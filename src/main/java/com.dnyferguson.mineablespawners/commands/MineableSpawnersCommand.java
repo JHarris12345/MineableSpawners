@@ -5,6 +5,7 @@ import com.dnyferguson.mineablespawners.utils.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jspecify.annotations.NonNull;
 
 public class MineableSpawnersCommand implements CommandExecutor {
     private final MineableSpawners plugin;
@@ -20,7 +21,7 @@ public class MineableSpawnersCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
         if (args.length < 1) {
             sendHelpMessage(sender);
             return true;
