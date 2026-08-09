@@ -2,14 +2,9 @@ package com.dnyferguson.mineablespawners.commands;
 
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
 
 public class MineableSpawnersCommand implements CommandExecutor {
     private final MineableSpawners plugin;
