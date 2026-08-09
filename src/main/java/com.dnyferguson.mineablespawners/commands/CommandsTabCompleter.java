@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 
@@ -43,9 +44,12 @@ public class CommandsTabCompleter implements TabCompleter {
                         suggestions.add(p.getName());
                     }
                 } else if (args.length == 3) {
-                    // suggest entity types
+                    // suggest entity types that are supported by the plugin (have a spawn egg material)
                     for (EntityType t : EntityType.values()) {
-                        suggestions.add(t.name().toLowerCase());
+                        Material egg = Material.getMaterial(t.name() + "_SPAWN_EGG");
+                        if (egg != null) {
+                            suggestions.add(t.name().toLowerCase());
+                        }
                     }
                 } else if (args.length == 4) {
                     // suggest common amounts
@@ -61,7 +65,10 @@ public class CommandsTabCompleter implements TabCompleter {
             } else if (sub.equals("set")) {
                 if (args.length == 2) {
                     for (EntityType t : EntityType.values()) {
-                        suggestions.add(t.name().toLowerCase());
+                        Material egg = Material.getMaterial(t.name() + "_SPAWN_EGG");
+                        if (egg != null) {
+                            suggestions.add(t.name().toLowerCase());
+                        }
                     }
                 }
 
