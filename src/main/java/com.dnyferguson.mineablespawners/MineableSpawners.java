@@ -1,11 +1,13 @@
 package com.dnyferguson.mineablespawners;
 
 import com.dnyferguson.mineablespawners.api.API;
+import com.dnyferguson.mineablespawners.commands.CommandsTabCompleter;
 import com.dnyferguson.mineablespawners.commands.MineableSpawnersCommand;
 import com.dnyferguson.mineablespawners.listeners.*;
 import com.dnyferguson.mineablespawners.metrics.Metrics;
 import com.dnyferguson.mineablespawners.utils.ConfigurationHandler;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -34,7 +36,15 @@ public final class MineableSpawners extends JavaPlugin {
             getLogger().info("vault not found, economy features disabled.");
         }
 
-        getCommand("mineablespawners").setExecutor(new MineableSpawnersCommand(this));
+        PluginCommand mineablespawnersPluginCommand = getCommand("mineablespawners");
+
+        if(mineablespawnersPluginCommand == null) {
+            getLogger().warning("MineableSpawners plugin command not found.");
+            return;
+        }
+
+        mineablespawnersPluginCommand.setExecutor(new MineableSpawnersCommand(this));
+        mineablespawnersPluginCommand.setTabCompleter(new CommandsTabCompleter());
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new SpawnerMineListener(this), this);
