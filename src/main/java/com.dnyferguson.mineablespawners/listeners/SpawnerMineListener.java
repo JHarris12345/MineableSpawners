@@ -27,6 +27,11 @@ import java.util.Set;
 public class SpawnerMineListener implements Listener {
     private final MineableSpawners plugin;
     private final Set<Location> minedSpawners = new HashSet<>();
+    // Location key -> server tick a mine was processed there. Drops duplicate BlockBreakEvents for the SAME
+    // spawner in the SAME tick (Geyser/Bedrock double-dig, fast-break, nuker) which would otherwise re-run
+    // giveSpawner (and re-charge the player) for one physical block = a spawner dupe. minedSpawners above only
+    // suppresses EXP, it does NOT dedup the spawner drop.
+    private final Map<String, Integer> recentSpawnerMineTicks = new HashMap<>();
     private final Map<String, Double> permissionChances = new HashMap<>();
     private final Map<EntityType, Double> prices = new HashMap<>();
     private boolean allSamePrice = false;
@@ -58,6 +63,9 @@ public class SpawnerMineListener implements Listener {
                 plugin.getLogger().info("Error with mining price \"" + line + "\"");
             }
         }
+
+        // Housekeeping only - bound the dedup map. Tick comparison is exact, so stale entries never false-match.
+        plugin.getServer().getScheduler().runTaskTimer(plugin, recentSpawnerMineTicks::clear, 20 * 60, 20 * 60);
     }
 
     @EventHandler (priority = EventPriority.MONITOR)
@@ -82,6 +90,18 @@ public class SpawnerMineListener implements Listener {
         if (!plugin.getConfigurationHandler().getBoolean("mining", "drop-exp") || minedSpawners.contains(loc)) {
             e.setExpToDrop(0);
         }
+
+        // Guard against a duplicate BlockBreakEvent for the SAME spawner within the SAME server tick
+        // (Geyser/Bedrock double-dig, fast-break, nuker, or a plugin that re-fires the event). Without this,
+        // each duplicate re-runs the drop below (and re-charges the player) for one physical block = a dupe.
+        // No stacking here, so every mine is a full removal: skip the duplicate entirely and let the real
+        // (uncancelled) break destroy the block. Placed before charging/dropping so neither runs twice.
+        String mineTickKey = loc.getWorld().getName() + ";" + loc.getBlockX() + ";" + loc.getBlockY() + ";" + loc.getBlockZ();
+        int currentTick = plugin.getServer().getCurrentTick();
+        if (recentSpawnerMineTicks.getOrDefault(mineTickKey, -1) == currentTick) {
+            return;
+        }
+        recentSpawnerMineTicks.put(mineTickKey, currentTick);
 
         // check if bypassing
         Player player = e.getPlayer();
