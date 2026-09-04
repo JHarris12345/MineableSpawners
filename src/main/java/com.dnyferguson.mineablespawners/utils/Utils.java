@@ -93,16 +93,17 @@ public class Utils {
         return output;
     }
 
+    /*
+     * Custom enchant item data lives under the "advancedenchantments" namespace.
+     * InsanityEnchantments kept that namespace when it replaced AdvancedEnchantments so that every
+     * item already out in the world keeps its enchants, which means the key has to be built from
+     * the namespace string rather than from the plugin instance.
+     */
     public static boolean hasAEEnchant(ItemStack item, String enchantName) {
-        Plugin ae = plugin.advancedEnchantments;
-        if (ae == null) ae = Bukkit.getPluginManager().getPlugin("AdvancedEnchantments");
+        NamespacedKey key = new NamespacedKey("advancedenchantments", "ae_enchantment-" + enchantName);
+        Integer data = item.getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
 
-        if (ae != null) {
-            String pdc = "ae_enchantment-" + enchantName;
-            Integer data = item.getPersistentDataContainer().get(new NamespacedKey(ae, pdc), PersistentDataType.INTEGER);
-            return data != null;
-        }
-
-        return false;
+        return data != null;
     }
+
 }
