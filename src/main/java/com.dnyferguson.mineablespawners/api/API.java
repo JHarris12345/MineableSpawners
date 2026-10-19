@@ -1,6 +1,6 @@
 package com.dnyferguson.mineablespawners.api;
 
-import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Material;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -54,7 +54,7 @@ public class API {
     }
 
     public ItemStack getSpawnerFromEntityType(EntityType entityType) {
-        ItemStack item = new ItemStack(Objects.requireNonNull(XMaterial.SPAWNER.parseMaterial()));
+        ItemStack item = new ItemStack(Objects.requireNonNull(Material.SPAWNER));
         ItemMeta meta = item.getItemMeta();
 
         String mobFormatted = Chat.uppercaseStartingLetters(entityType.name().toString());

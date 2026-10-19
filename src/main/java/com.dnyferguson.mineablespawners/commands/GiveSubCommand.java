@@ -1,6 +1,6 @@
 package com.dnyferguson.mineablespawners.commands;
 
-import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Material;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
 import com.dnyferguson.mineablespawners.utils.Utils;
@@ -44,7 +44,7 @@ public class GiveSubCommand {
             return;
         }
 
-        ItemStack item = new ItemStack(XMaterial.SPAWNER.parseMaterial());
+        ItemStack item = new ItemStack(Material.SPAWNER);
         ItemMeta meta = item.getItemMeta();
         item.setAmount(amount);
 

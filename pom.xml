@@ -58,10 +58,6 @@
                             <pattern>de.tr7zw.changeme.nbtapi</pattern>
                             <shadedPattern>com.dnyferguson.mineablespawners.nbtapi</shadedPattern>
                         </relocation>
-                        <relocation>
-                            <pattern>com.cryptomorin.xseries</pattern>
-                            <shadedPattern>com.dnyferguson.mineablespawners.xseries</shadedPattern>
-                        </relocation>
                     </relocations>
                 </configuration>
             </plugin>
@@ -114,11 +110,6 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.cryptomorin</groupId>
-            <artifactId>XSeries</artifactId>
-            <version>8.7.1</version>
         </dependency>
         <dependency>
             <groupId>de.tr7zw</groupId>

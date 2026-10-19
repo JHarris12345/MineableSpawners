@@ -1,6 +1,6 @@
 package com.dnyferguson.mineablespawners.listeners;
 
-import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Material;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -40,7 +40,7 @@ public class WitherBreakSpawnerListener implements Listener {
 
         Block block = event.getBlock();
 
-        if (!block.getType().equals(XMaterial.SPAWNER.parseMaterial())) {
+        if (!block.getType().equals(Material.SPAWNER)) {
             return;
         }
 
@@ -55,7 +55,7 @@ public class WitherBreakSpawnerListener implements Listener {
 
         CreatureSpawner spawner = (CreatureSpawner) block.getState();
 
-        ItemStack item = new ItemStack(XMaterial.SPAWNER.parseMaterial());
+        ItemStack item = new ItemStack(Material.SPAWNER);
         ItemMeta meta = item.getItemMeta();
         String mobFormatted = Chat.uppercaseStartingLetters(spawner.getSpawnedType().toString());
 

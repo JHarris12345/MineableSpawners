@@ -1,6 +1,5 @@
 package com.dnyferguson.mineablespawners.listeners;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
 import com.dnyferguson.mineablespawners.utils.Utils;
@@ -55,7 +54,7 @@ public class SpawnerPlaceListener implements Listener {
         Material material = block.getType();
 
         // check if item is spawner
-        if (material != XMaterial.SPAWNER.parseMaterial()) {
+        if (material != Material.SPAWNER) {
             return;
         }
 

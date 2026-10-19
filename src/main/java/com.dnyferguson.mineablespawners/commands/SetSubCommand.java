@@ -1,6 +1,5 @@
 package com.dnyferguson.mineablespawners.commands;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
 import org.bukkit.Material;
@@ -17,7 +16,7 @@ public class SetSubCommand {
     private final Set<Material> invisibleBlocks = new HashSet<>();
 
     public SetSubCommand() {
-        invisibleBlocks.add(XMaterial.AIR.parseMaterial());
+        invisibleBlocks.add(Material.AIR);
     }
 
     public void execute(MineableSpawners plugin, CommandSender sender, String type) {
@@ -50,7 +49,7 @@ public class SetSubCommand {
 
         Block target = player.getTargetBlock(invisibleBlocks, 5);
 
-        if (target.getState().getBlock().getType() != XMaterial.SPAWNER.parseMaterial()) {
+        if (target.getState().getBlock().getType() != Material.SPAWNER) {
             player.sendMessage(plugin.getConfigurationHandler().getMessage("set", "not-looking-at"));
             return;
         }

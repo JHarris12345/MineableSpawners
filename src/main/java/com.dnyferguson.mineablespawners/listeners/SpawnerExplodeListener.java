@@ -1,6 +1,6 @@
 package com.dnyferguson.mineablespawners.listeners;
 
-import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Material;
 import com.dnyferguson.mineablespawners.MineableSpawners;
 import com.dnyferguson.mineablespawners.utils.Chat;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -37,7 +37,7 @@ public class SpawnerExplodeListener implements Listener {
         if (e.getEntityType() == EntityType.WIND_CHARGE || e.getEntityType() == EntityType.BREEZE_WIND_CHARGE) return;
 
         for (Block block : e.blockList()) {
-            if (!block.getType().equals(XMaterial.SPAWNER.parseMaterial())) {
+            if (!block.getType().equals(Material.SPAWNER)) {
                 continue;
             }
 
@@ -52,7 +52,7 @@ public class SpawnerExplodeListener implements Listener {
 
             CreatureSpawner spawner = (CreatureSpawner) block.getState();
 
-            ItemStack item = new ItemStack(XMaterial.SPAWNER.parseMaterial());
+            ItemStack item = new ItemStack(Material.SPAWNER);
             ItemMeta meta = item.getItemMeta();
             String mobFormatted = Chat.uppercaseStartingLetters(spawner.getSpawnedType().toString());
 
